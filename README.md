@@ -30,6 +30,6 @@ In your `init.el`:
 
 ## License
 
-flycheck-objc-clang is licensed under the MIT License.
+The software is licensed under the MIT License.
 
-See the LICENSE file for more info.
+See the LICENSE file for details.
