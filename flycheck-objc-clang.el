@@ -226,7 +226,8 @@ framework include files, via `-F'."
            (option "-isysroot" flycheck-objc-clang-sysroot)
            (option-list "-I" flycheck-objc-clang-include-paths concat)
            (option-list "-F" flycheck-objc-clang-framework-paths concat)
-           source)))
+           ;; Read from standard input
+           "-"))))
     (if xcrun-path
         (let ((xcrun-command
                `(,xcrun-path
