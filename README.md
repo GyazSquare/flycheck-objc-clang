@@ -14,8 +14,8 @@ In your `init.el`:
 
 ```elisp
 (require 'flycheck-objc-clang) ; Not necessary if using ELPA package
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-objc-clang-setup))
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-objc-clang-setup))
 ```
 
 ### Configuration
