@@ -45,29 +45,26 @@
     (expand-file-name "test/" (locate-dominating-file filename "Cask")))
   "Test suite directory, for resource loading.")
 
-(flycheck-ert-def-checker-test objc-clang objc warnings
-  (let ((flycheck-checkers '(objc-clang)))
-    (flycheck-ert-should-syntax-check
-     "expressions.m" 'objc-mode
-     '(4 3 warning "expression result unused" :checker objc-clang))))
-
-(flycheck-ert-def-checker-test objc-clang objc errors
+(flycheck-ert-def-checker-test objc-clang objc error
   (let ((flycheck-checkers '(objc-clang)))
     (flycheck-ert-should-syntax-check
      "missing-closing-rbrace.m" 'objc-mode
      '(3 16 error "'@end' appears where closing brace '}' is expected"
          :checker objc-clang))))
 
-(flycheck-ert-def-checker-test objc-clang objc warnings+notes
+(flycheck-ert-def-checker-test objc-clang objc error-included-file
   (let ((flycheck-checkers '(objc-clang)))
     (flycheck-ert-should-syntax-check
-     "unqualified-to-qualified-class-warn.m" 'objc-mode
-     '(21 66 info "passing argument to parameter 'instance' here"
-          :checker objc-clang)
-     '(27 47 warning "incompatible pointer types passing 'AClass *' to parameter of type 'AClass<Fooable> *'"
-          :checker objc-clang))))
+     "error-include.m" 'objc-mode
+     '(2 nil error "In include ./error-no-message.h" :checker objc-clang))))
 
-(flycheck-ert-def-checker-test objc-clang objc errors+notes
+(flycheck-ert-def-checker-test objc-clang objc error-no-message
+  (let ((flycheck-checkers '(objc-clang)))
+    (flycheck-ert-should-syntax-check
+     "error-no-message.h" 'objc-mode
+     '(2 2 error "no message" :checker objc-clang))))
+
+(flycheck-ert-def-checker-test objc-clang objc error-note
   (let ((flycheck-checkers '(objc-clang)))
     (flycheck-ert-should-syntax-check
      "missing-end.m" 'objc-mode
@@ -75,6 +72,33 @@
      '(6 3 error "expected an Objective-C directive after '@'"
          :checker objc-clang)
      '(7 36 error "missing '@end'" :checker objc-clang))))
+
+(flycheck-ert-def-checker-test objc-clang objc warning
+  (let ((flycheck-checkers '(objc-clang)))
+    (flycheck-ert-should-syntax-check
+     "expressions.m" 'objc-mode
+     '(4 3 warning "expression result unused" :checker objc-clang))))
+
+(flycheck-ert-def-checker-test objc-clang objc warning-included-file
+  (let ((flycheck-checkers '(objc-clang)))
+    (flycheck-ert-should-syntax-check
+     "warning-include.m" 'objc-mode
+     '(2 nil warning "In include ./warning-no-message.h" :checker objc-clang))))
+
+(flycheck-ert-def-checker-test objc-clang objc warning-no-message
+  (let ((flycheck-checkers '(objc-clang)))
+    (flycheck-ert-should-syntax-check
+     "warning-no-message.h" 'objc-mode
+     '(2 2 warning "no message" :checker objc-clang))))
+
+(flycheck-ert-def-checker-test objc-clang objc warning-note
+  (let ((flycheck-checkers '(objc-clang)))
+    (flycheck-ert-should-syntax-check
+     "unqualified-to-qualified-class-warn.m" 'objc-mode
+     '(21 66 info "passing argument to parameter 'instance' here"
+          :checker objc-clang)
+     '(27 47 warning "incompatible pointer types passing 'AClass *' to parameter of type 'AClass<Fooable> *'"
+          :checker objc-clang))))
 
 (flycheck-ert-initialize flycheck-objc-clang-test-directory)
 

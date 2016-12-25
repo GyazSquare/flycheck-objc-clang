@@ -1,0 +1,2 @@
+// expected-error {{}}
+#error
