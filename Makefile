@@ -13,8 +13,8 @@ export CASK_EMACS
 
 SRCS := flycheck-objc-clang.el
 OBJECTS := $(SRCS:.el=.elc)
-TEST_SRCS := test/flycheck-objc-clang-test.el
-TEST_OBJECTS := $(TEST_SRCS:.el=.elc)
+TEST_DIR := test
+TEST_SRCS := flycheck-objc-clang-test.el
 
 .PHONY: all
 all : $(OBJECTS)
@@ -35,8 +35,8 @@ dist :
 .PHONY: test
 test: $(PKGDIR)
 	$(CASK) exec $(EMACSBATCH) \
-		--load $(SRCS) \
-		--load $(TEST_SRCS) \
+		$(SRCS:%=--load %) \
+		$(TEST_SRCS:%=--load $(TEST_DIR)/%) \
 		--funcall ert-run-tests-batch-and-exit
 
 $(PKGDIR) : Cask
