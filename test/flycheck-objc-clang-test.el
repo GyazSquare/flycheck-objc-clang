@@ -36,7 +36,6 @@
 ;;; Code:
 
 (require 'flycheck-ert)
-(require 'flycheck-objc-clang)
 
 (message "Running tests on Emacs %s" emacs-version)
 
@@ -64,7 +63,7 @@
      "error-no-message.h" 'objc-mode
      '(2 2 error "no message" :checker objc-clang))))
 
-(flycheck-ert-def-checker-test objc-clang objc error-note
+(flycheck-ert-def-checker-test objc-clang objc error-info
   (let ((flycheck-checkers '(objc-clang)))
     (flycheck-ert-should-syntax-check
      "missing-end.m" 'objc-mode
@@ -91,7 +90,7 @@
      "warning-no-message.h" 'objc-mode
      '(2 2 warning "no message" :checker objc-clang))))
 
-(flycheck-ert-def-checker-test objc-clang objc warning-note
+(flycheck-ert-def-checker-test objc-clang objc warning-info
   (let ((flycheck-checkers '(objc-clang)))
     (flycheck-ert-should-syntax-check
      "unqualified-to-qualified-class-warn.m" 'objc-mode
