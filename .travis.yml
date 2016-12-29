@@ -19,7 +19,6 @@ before_install:
 - make -f emacs-travis.mk install_cask
 - emacs --version
 script:
-- make
 - make test
 notifications:
   slack:
