@@ -36,6 +36,7 @@
 ;;; Code:
 
 (require 'flycheck-ert)
+(require 'flycheck-objc-clang)
 
 (message "Running tests on Emacs %s" emacs-version)
 

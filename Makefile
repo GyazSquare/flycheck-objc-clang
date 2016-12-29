@@ -1,5 +1,5 @@
 EMACS ?= emacs
-EMACSFLAGS += -L .
+EMACSFLAGS += --directory .
 CASK ?= cask
 
 PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
@@ -12,36 +12,35 @@ export EMACS
 export CASK_EMACS
 
 SRCS := flycheck-objc-clang.el
-OBJECTS := $(SRCS:.el=.elc)
+OBJS := $(SRCS:.el=.elc)
 TEST_DIR := test
 TEST_SRCS := flycheck-objc-clang-test.el
 
-.PHONY: all
-all : $(OBJECTS)
+.PHONY : all
+all : $(OBJS)
 
-.PHONY: clean
+.PHONY : clean
 clean :
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJS)
 
-.PHONY: distclean
+.PHONY : distclean
 distclean : clean
 	rm -rf $(DESTDIR)
 	rm -rf .cask
 
-.PHONY: dist
+.PHONY : dist
 dist :
 	$(CASK) package $(DESTDIR)
 
-.PHONY: test
-test: $(PKGDIR)
+.PHONY : test
+test : all
 	$(CASK) exec $(EMACSBATCH) \
-		$(SRCS:%=--load %) \
 		$(TEST_SRCS:%=--load $(TEST_DIR)/%) \
 		--funcall ert-run-tests-batch-and-exit
 
 $(PKGDIR) : Cask
 	$(CASK) install
-	$(CASK) update
+	touch $(@)
 
 %.elc : %.el $(PKGDIR)
 	$(CASK) exec $(EMACSBATCH) \
