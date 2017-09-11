@@ -7,7 +7,7 @@ env:
 - EMACS_VERSION=snapshot
 matrix:
   allow_failures:
-  - env:EMACS_VERSION=snapshot
+  - env: EMACS_VERSION=snapshot
   fast_finish: true
 cache:
   directories:
