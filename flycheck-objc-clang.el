@@ -46,7 +46,7 @@
 (require 'flycheck)
 
 (flycheck-def-option-var flycheck-objc-clang-xcrun-sdk nil objc-clang
-  "Specifies which SDK to search for tools.
+  "Specify which SDK to search for tools.
 
 When non-nil, set the SDK name to find the tools, via `--sdk'.
 The option is available only on macOS.
@@ -56,7 +56,7 @@ Use `xcodebuild -showsdks' to list the available SDK names."
   :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-xcrun-toolchain nil objc-clang
-  "Specifies which toolchain to use to perform the lookup.
+  "Specify which toolchain to use to perform the lookup.
 
 When non-nil, set the toolchain identifier or name to use to
 perform the lookup, via `--toolchain'.
@@ -111,7 +111,7 @@ When non-nil, set iOS deployment target via
   :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-macosx-version-min nil objc-clang
-       "Specifies Mac OS X deployment target.
+       "Specify Mac OS X deployment target.
 
 When non-nil, set Mac OS X deployment target via
 `-mmacosx-version-min'."
@@ -119,7 +119,7 @@ When non-nil, set Mac OS X deployment target via
        :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-tvos-version-min nil objc-clang
-  "Specifies tvOS deployment target.
+  "Specify tvOS deployment target.
 
 When non-nil, set tvOS deployment target via
 `-mtvos-version-min'."
@@ -127,7 +127,7 @@ When non-nil, set tvOS deployment target via
   :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-watchos-version-min nil objc-clang
-  "Specifies watchOS deployment target.
+  "Specify watchOS deployment target.
 
 When non-nil, set watchOS deployment target via
 `-mwatchos-version-min'."
