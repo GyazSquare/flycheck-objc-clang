@@ -84,6 +84,14 @@ more information about ARC."
   :type 'boolean
   :safe #'booleanp)
 
+(flycheck-def-option-var flycheck-objc-clang-runtime nil objc-clang
+  "Specify the target Objective-C runtime kind and version.
+
+When non-nil, set the Objective-C runtime kind and version, via
+`-fobjc-runtime'."
+  :type 'string
+  :safe #'stringp)
+
 (flycheck-def-option-var flycheck-objc-clang-modules nil objc-clang
   "Enable the modules feature.
 
@@ -207,6 +215,7 @@ framework include files, via `-F'."
                   ((eq major-mode 'c-mode) '("-x" "c"))))
            (option "-std=" flycheck-objc-clang-language-standard concat)
            (option-flag "-fobjc-arc" flycheck-objc-clang-arc)
+           (option "-fobjc-runtime=" flycheck-objc-clang-runtime concat)
            (option-flag "-fmodules" flycheck-objc-clang-modules)
            (option-list "-arch" flycheck-objc-clang-archs)
            (option "-mios-version-min="
