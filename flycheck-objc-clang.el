@@ -188,6 +188,14 @@ When non-nil, set the system root directory via `-isysroot'."
                  (string :tag "Sysroot"))
   :safe #'stringp)
 
+(flycheck-def-option-var flycheck-objc-clang-quote-include-paths nil objc-clang
+  "Add directory to QUOTE include search paths.
+
+When non-nil, add the specified directory to the search path for
+QUOTE include files, via `-iquote'."
+  :type '(repeat (directory :tag "QUOTE include directory"))
+  :safe #'flycheck-string-list-p)
+
 (flycheck-def-option-var flycheck-objc-clang-include-paths nil objc-clang
   "Add directory to include search paths.
 
@@ -233,6 +241,7 @@ framework include files, via `-F'."
            (option-list "-D" flycheck-objc-clang-definitions concat)
            (option-list "-include" flycheck-objc-clang-includes)
            (option "-isysroot" flycheck-objc-clang-sysroot)
+           (option-list "-iquote" flycheck-objc-clang-quote-include-paths)
            (option-list "-I" flycheck-objc-clang-include-paths concat)
            (option-list "-F" flycheck-objc-clang-framework-paths concat)
            ;; Read from standard input
