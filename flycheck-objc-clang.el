@@ -171,6 +171,17 @@ which is read before the source file is preprocessed, via `-D'."
   :type '(repeat (string :tag "Definition"))
   :safe #'flycheck-string-list-p)
 
+(flycheck-def-option-var flycheck-objc-clang-system-framework-search-paths nil
+                         objc-clang
+  "Add directory to SYSTEM framework search path, absolute paths
+are relative to -isysroot.
+
+When non-nil, add the specified directory to the search path for
+system framework include files, via `-iframeworkwithsysroot'.
+The option is available in Clang 5 or later."
+  :type '(repeat (directory :tag "System framework directory"))
+  :safe #'flycheck-string-list-p)
+
 (flycheck-def-option-var flycheck-objc-clang-includes nil objc-clang
   "Include files before parsing.
 
@@ -239,6 +250,8 @@ framework include files, via `-F'."
            "-fno-caret-diagnostics"
            "-fno-diagnostics-show-option"
            (option-list "-D" flycheck-objc-clang-definitions concat)
+           (option-list "-iframeworkwithsysroot"
+                        flycheck-objc-clang-system-framework-search-paths)
            (option-list "-include" flycheck-objc-clang-includes)
            (option "-isysroot" flycheck-objc-clang-sysroot)
            (option-list "-iquote" flycheck-objc-clang-quote-include-paths)
