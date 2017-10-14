@@ -1,25 +1,28 @@
 language: emacs-lisp
-osx_image: xcode8.3
+os: osx
+osx_image: xcode9
 env:
-- EMACS_VERSION=24.4
-- EMACS_VERSION=24.5
-- EMACS_VERSION=25.1
-- EMACS_VERSION=snapshot
+  - EMACS_VERSION=24.5
+  - EMACS_VERSION=25.3
+  - EMACS_VERSION=snapshot
 matrix:
-  allow_failures:
-  - env:EMACS_VERSION=snapshot
   fast_finish: true
+  allow_failures:
+    - env: EMACS_VERSION=snapshot
 cache:
   directories:
-  - .cask
+    - .cask
 before_install:
-- export PATH="$HOME/bin:$PATH"
-- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
-- make -f emacs-travis.mk install_emacs
-- make -f emacs-travis.mk install_cask
-- emacs --version
+  - export PATH="${HOME}/bin:${PATH}"
+  - export EMACSCONFFLAGS='--without-all --with-x-toolkit=no --with-xml2 --without-toolkit-scroll-bars --without-ns --without-x'
+  - export CFLAGS='-O2 -march=native'
+  - export CXXFLAGS='-O2 -march=native'
+  - wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
+  - make -f emacs-travis.mk install_emacs
+  - make -f emacs-travis.mk install_cask
+  - emacs --version
 script:
-- make test
+  - make test
 notifications:
   slack:
     secure: j0F/1LzR5n4bR2SuMnaWCaVLQTc9r7DVIDrw4hWi2r0SjCEIgM+/WpB44TWOMVvmwyWE/qpIyQYHhvklMYQPLT6rvzQ4ENeS5t+dXIAbLMtAlJHSvDZrHcP5ULZPXNJ91839aV4B54iWCd8KVcgaokws2gcrXf2MmsPffUj6AGpF3DKHST+fcEFyYsCH+uciKfGll4HEkzi17DMsE5JDI9FP15DPWgH+yAnVtBFOiMbl+wpD2HMjZ7KTH44gJdYyjiya8WLqgJRsh5LNLW5MEaWgFZfYewP09tL9yAc/ZiWLPJL1zBK74QWKXOAl138J4jkFTZPdV6wygpDT4slivYDzUvrYyvqfsZhhP7fje6nDWrixxqNEVPo3fquInP6siM0cJAFd97QL4RFc+77vlXXTvFY1aFCKnaEStfr0XE7YN5ofjmq10Fop0BmdF9hyv2fKy3tLuhk8vLU7EcCh1Cm3yPwsIwmF9HeJ8k5qZAJxvP/SREA6CrnfwXfPnF+MpUoGRS8vv4wWq/6yB5j0af+4SrilgvMMQT3ktlJ0gz/UxFuLdO7CQmZ78w0coGpTBmV9q7PvHp6vYy1KfcSHA45HQdD8RH+T02VQWLX2X8+m4Fa8P+6WTxpVm31071uuVvwr9jg6alRiwupePK1pi93da8t6d4MRttIOTbFo8SM=

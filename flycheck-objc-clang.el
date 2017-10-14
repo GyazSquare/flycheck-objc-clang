@@ -4,7 +4,7 @@
 
 ;; Author: Goichi Hirakawa <gooichi@gyazsquare.com>
 ;; URL: https://github.com/GyazSquare/flycheck-objc-clang
-;; Version: 1.1.0
+;; Version: 2.0.0
 ;; Keywords: convenience, languages, tools
 ;; Package-Requires: ((emacs "24.4") (flycheck "26"))
 
@@ -46,7 +46,7 @@
 (require 'flycheck)
 
 (flycheck-def-option-var flycheck-objc-clang-xcrun-sdk nil objc-clang
-  "Specifies which SDK to search for tools.
+  "Specify which SDK to search for tools.
 
 When non-nil, set the SDK name to find the tools, via `--sdk'.
 The option is available only on macOS.
@@ -56,7 +56,7 @@ Use `xcodebuild -showsdks' to list the available SDK names."
   :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-xcrun-toolchain nil objc-clang
-  "Specifies which toolchain to use to perform the lookup.
+  "Specify which toolchain to use to perform the lookup.
 
 When non-nil, set the toolchain identifier or name to use to
 perform the lookup, via `--toolchain'.
@@ -83,6 +83,14 @@ See URL
 more information about ARC."
   :type 'boolean
   :safe #'booleanp)
+
+(flycheck-def-option-var flycheck-objc-clang-runtime nil objc-clang
+  "Specify the target Objective-C runtime kind and version.
+
+When non-nil, set the Objective-C runtime kind and version, via
+`-fobjc-runtime'."
+  :type 'string
+  :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-modules nil objc-clang
   "Enable the modules feature.
@@ -111,7 +119,7 @@ When non-nil, set iOS deployment target via
   :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-macosx-version-min nil objc-clang
-       "Specifies Mac OS X deployment target.
+       "Specify Mac OS X deployment target.
 
 When non-nil, set Mac OS X deployment target via
 `-mmacosx-version-min'."
@@ -119,7 +127,7 @@ When non-nil, set Mac OS X deployment target via
        :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-tvos-version-min nil objc-clang
-  "Specifies tvOS deployment target.
+  "Specify tvOS deployment target.
 
 When non-nil, set tvOS deployment target via
 `-mtvos-version-min'."
@@ -127,7 +135,7 @@ When non-nil, set tvOS deployment target via
   :safe #'stringp)
 
 (flycheck-def-option-var flycheck-objc-clang-watchos-version-min nil objc-clang
-  "Specifies watchOS deployment target.
+  "Specify watchOS deployment target.
 
 When non-nil, set watchOS deployment target via
 `-mwatchos-version-min'."
@@ -163,6 +171,17 @@ which is read before the source file is preprocessed, via `-D'."
   :type '(repeat (string :tag "Definition"))
   :safe #'flycheck-string-list-p)
 
+(flycheck-def-option-var flycheck-objc-clang-system-framework-search-paths nil
+                         objc-clang
+  "Add directory to SYSTEM framework search path, absolute paths
+are relative to -isysroot.
+
+When non-nil, add the specified directory to the search path for
+system framework include files, via `-iframeworkwithsysroot'.
+The option is available in Clang 5 or later."
+  :type '(repeat (directory :tag "System framework directory"))
+  :safe #'flycheck-string-list-p)
+
 (flycheck-def-option-var flycheck-objc-clang-includes nil objc-clang
   "Include files before parsing.
 
@@ -179,6 +198,14 @@ When non-nil, set the system root directory via `-isysroot'."
   :type '(choice (const :tag "Default sysroot" nil)
                  (string :tag "Sysroot"))
   :safe #'stringp)
+
+(flycheck-def-option-var flycheck-objc-clang-quote-include-paths nil objc-clang
+  "Add directory to QUOTE include search paths.
+
+When non-nil, add the specified directory to the search path for
+QUOTE include files, via `-iquote'."
+  :type '(repeat (directory :tag "QUOTE include directory"))
+  :safe #'flycheck-string-list-p)
 
 (flycheck-def-option-var flycheck-objc-clang-include-paths nil objc-clang
   "Add directory to include search paths.
@@ -207,6 +234,7 @@ framework include files, via `-F'."
                   ((eq major-mode 'c-mode) '("-x" "c"))))
            (option "-std=" flycheck-objc-clang-language-standard concat)
            (option-flag "-fobjc-arc" flycheck-objc-clang-arc)
+           (option "-fobjc-runtime=" flycheck-objc-clang-runtime concat)
            (option-flag "-fmodules" flycheck-objc-clang-modules)
            (option-list "-arch" flycheck-objc-clang-archs)
            (option "-mios-version-min="
@@ -222,8 +250,11 @@ framework include files, via `-F'."
            "-fno-caret-diagnostics"
            "-fno-diagnostics-show-option"
            (option-list "-D" flycheck-objc-clang-definitions concat)
+           (option-list "-iframeworkwithsysroot"
+                        flycheck-objc-clang-system-framework-search-paths)
            (option-list "-include" flycheck-objc-clang-includes)
            (option "-isysroot" flycheck-objc-clang-sysroot)
+           (option-list "-iquote" flycheck-objc-clang-quote-include-paths)
            (option-list "-I" flycheck-objc-clang-include-paths concat)
            (option-list "-F" flycheck-objc-clang-framework-paths concat)
            ;; Read from standard input
