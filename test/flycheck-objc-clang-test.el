@@ -56,7 +56,10 @@
   (let ((flycheck-checkers '(objc-clang)))
     (flycheck-ert-should-syntax-check
      "error-include.m" 'objc-mode
-     '(2 nil error "In include ./error-no-message.h" :checker objc-clang))))
+     '(2 nil error "In include ./error-no-message.h" :checker objc-clang)
+     `(2 2 error "no message" :checker objc-clang
+         :filename ,(expand-file-name "error-no-message.h"
+                                      flycheck-objc-clang-test-directory)))))
 
 (flycheck-ert-def-checker-test objc-clang objc error-no-message
   (let ((flycheck-checkers '(objc-clang)))
