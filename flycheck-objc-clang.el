@@ -1,4 +1,4 @@
-;;; flycheck-objc-clang.el --- Flycheck: Objective-C support using Clang
+;;; flycheck-objc-clang.el --- Flycheck: Objective-C support using Clang -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2016-2018 GyazSquare Inc.
 
