@@ -1,6 +1,6 @@
 ;;; flycheck-objc-clang.el --- Flycheck: Objective-C support using Clang -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2016-2018 GyazSquare Inc.
+;; Copyright (c) 2016-2019 GyazSquare Inc.
 
 ;; Author: Goichi Hirakawa <gooichi@gyazsquare.com>
 ;; URL: https://github.com/GyazSquare/flycheck-objc-clang
@@ -91,6 +91,14 @@ When non-nil, set the Objective-C runtime kind and version, via
 `-fobjc-runtime'."
   :type 'string
   :safe #'stringp)
+
+(flycheck-def-option-var flycheck-objc-clang-weak nil objc-clang
+  "Enable weak references in Manual Reference Counting (MRC).
+
+When non-nil, enable ARC-stype weak references via
+`-fobjc-weak'. It is disabled by default."
+  :type 'boolean
+  :safe #'booleanp)
 
 (flycheck-def-option-var flycheck-objc-clang-modules nil objc-clang
   "Enable the modules feature.
@@ -235,6 +243,7 @@ framework include files, via `-F'."
            (option "-std=" flycheck-objc-clang-language-standard concat)
            (option-flag "-fobjc-arc" flycheck-objc-clang-arc)
            (option "-fobjc-runtime=" flycheck-objc-clang-runtime concat)
+           (option-flag "-fobjc-weak" flycheck-objc-clang-weak)
            (option-flag "-fmodules" flycheck-objc-clang-modules)
            (option-list "-arch" flycheck-objc-clang-archs)
            (option "-mios-version-min="
