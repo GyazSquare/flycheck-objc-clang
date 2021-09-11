@@ -47,6 +47,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc error
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -56,6 +57,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc error-included-file
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -66,15 +68,17 @@
                                       flycheck-objc-clang-test-directory)))))
 
 (flycheck-ert-def-checker-test objc-clang objc error-no-message
-(let ((flycheck-checkers '(objc-clang))
-      (flycheck-swift3-xcrun-sdk "macosx")
-      (flycheck-objc-clang-warnings nil))
+  (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
+        (flycheck-swift3-xcrun-sdk "macosx")
+        (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
      "error-no-message.h" 'objc-mode
      '(2 2 error "no message" :checker objc-clang))))
 
 (flycheck-ert-def-checker-test objc-clang objc error-info
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -86,6 +90,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc warning
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -94,6 +99,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc warning-included-file
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -102,6 +108,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc warning-no-message
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -110,6 +117,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc warning-info
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-warnings nil))
     (flycheck-ert-should-syntax-check
@@ -121,6 +129,7 @@
 
 (flycheck-ert-def-checker-test objc-clang objc mrc-weak
   (let ((flycheck-checkers '(objc-clang))
+        (flycheck-ert-checker-wait-time 300)
         (flycheck-swift3-xcrun-sdk "macosx")
         (flycheck-objc-clang-weak t)
         (flycheck-objc-clang-warnings nil))
