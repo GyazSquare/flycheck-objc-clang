@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MELPA](https://melpa.org/packages/flycheck-objc-clang-badge.svg)](https://melpa.org/#/flycheck-objc-clang)
 [![MELPA Stable](https://stable.melpa.org/packages/flycheck-objc-clang-badge.svg)](https://stable.melpa.org/#/flycheck-objc-clang)
-[![Build Status](https://api.travis-ci.com/GyazSquare/flycheck-objc-clang.svg?branch=master)](https://travis-ci.com/GyazSquare/flycheck-objc-clang)
+[![Build Status](https://github.com/GyazSquare/flycheck-objc-clang/actions/workflows/test.yml/badge.svg)](https://github.com/GyazSquare/flycheck-objc-clang/actions/workflows/test.yml)
 
 An Objective-C syntax checker using Clang.
 
